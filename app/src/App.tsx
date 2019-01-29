@@ -5,21 +5,13 @@ import Bells from "./Bells";
 import LateArrivalInfo from "./LateArrivalInfo";
 import { useMedia } from "use-media";
 import LunchInfo from "./LunchInfo";
+import { usePromise } from "./utils";
 
 const App = () => {
-  const [bells, setBells] = useState<BellSchedule | undefined>(undefined);
-  const [lunch, setLunch] = useState<string[] | undefined>(undefined)
+  const bells = usePromise(bellSchedule);
+  const lunch = usePromise(lunchMenu)
 
   const small = useMedia("(max-width: 600px)");
-
-  useEffect(() => {
-    bellSchedule().then(bellSchedule => {
-      setBells(bellSchedule);
-    });
-    lunchMenu().then(lunchMenu => {
-      setLunch(lunchMenu)
-    })
-  }, []);
 
   return (
     <div>
