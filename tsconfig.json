@@ -2,15 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "types/*"
-      ]
+      "*": ["types/*"]
     },
-    "module": "esnext",
-    "jsx": "preserve",
+    "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "strictNullChecks": true
+    "module": "commonjs"
   }
 }

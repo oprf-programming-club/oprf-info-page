@@ -1,3 +1,5 @@
-node_modules/
+node_modules
+/templates/*.js
 yarn-error.log
-dist/
+src/**/*.js
+!src/entry.js

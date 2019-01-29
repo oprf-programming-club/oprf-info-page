@@ -1,25 +1,25 @@
 {
   "name": "oprf-info-page",
-  "version": 2,
   "alias": "https://oprf-info-page.now.sh",
+  "version": 2,
   "builds": [
     {
-      "src": "api/now-runner.js",
+      "src": "/src/entry.js",
       "use": "@now/node"
     },
     {
-      "src": "app/package.json",
-      "use": "@now/static-build"
+      "src": "/static/*",
+      "use": "@now/static"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/now-runner.js"
+      "src": "/",
+      "dest": "/src/entry.js"
     },
     {
       "src": "/(.*)",
-      "dest": "app/$1"
+      "dest": "/static/$1"
     }
   ]
 }

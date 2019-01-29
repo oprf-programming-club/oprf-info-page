@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>OPRF Info</title>
+</head>
+
+<body>
+    <div id="header">
+        <h1>OPRF Info Page</h1>
+    </div>
+    <div id="bells">
+        <h2>Bell Schedule</h2>
+        <table class="table table-custom">
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Regular</th>
+                    <th>Late Arrival</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#bells.periods}
+                <tr>
+                    <td>{num}</td>
+                    <td>{normal}</td>
+                    <td>{lateArrival}</td>
+                </tr>
+                {/bells.periods}
+            </tbody>
+        </table>
+    </div>
+    <div id="wed">
+        {#bells}
+        This upcoming Wednesday, {nextWed},{~s}
+        {?nextWedLate}
+        <span class="pos">
+            WILL
+        </span>
+        {:else}
+        <span class="neg">
+            will NOT
+        </span>
+        {/nextWedLate}{~s}
+        be a late arrival Wednesday.
+        {/bells}
+    </div>
+    <div id="menu">
+        <table></table>
+    </div>
+</body>
+
+</html>

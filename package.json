@@ -1,8 +1,26 @@
 {
-    "private": true,
-    "workspaces": [
-        "app",
-        "lib",
-        "api"
-    ]
+  "dependencies": {
+    "@types/mime-types": "^2.1.0",
+    "agentkeepalive": "^4.0.0",
+    "cheerio": "^1.0.0-rc.2",
+    "date-fns": "^1.30.1",
+    "dustjs-linkedin": "^2.7.5",
+    "got": "^9.5.1",
+    "htmlparser2": "^3.10.0",
+    "ntlm": "^0.1.3"
+  },
+  "scripts": {
+    "now-build": "dustc -s --cjs templates/*.dust && tsc",
+    "dev": "node runner.js"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.10",
+    "@types/dustjs-linkedin": "^1.2.31",
+    "@types/got": "^9.3.0",
+    "@types/htmlparser2": "^3.7.31",
+    "mime-types": "^2.1.21",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.2.4"
+  },
+  "license": "UNLICENSED"
 }
