@@ -8,7 +8,8 @@
   "scripts": {
     "start": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold' 'cd api;yarn start' 'cd app;yarn start'",
     "deploy": "now",
-    "start:coder": "PORT=80 OPRF_API_PORT=3000 OPRF_API_URL=https://3000-gluesweepinggnu.cdr.co yarn start"
+    "start:coder": "PORT=80 OPRF_API_PORT=3000 OPRF_API_URL=https://3000-gluesweepinggnu.cdr.co yarn start",
+    "prod": "NODE_ENV=production yarn start"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
