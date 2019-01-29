@@ -1,8 +1,16 @@
 {
-    "private": true,
-    "workspaces": [
-        "app",
-        "lib",
-        "api"
-    ]
+  "private": true,
+  "workspaces": [
+    "app",
+    "lib",
+    "api"
+  ],
+  "scripts": {
+    "start": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold' 'cd api;yarn start' 'cd app;yarn start'",
+    "deploy": "now"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "now": "latest"
+  }
 }
