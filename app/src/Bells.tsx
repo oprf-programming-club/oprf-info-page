@@ -3,6 +3,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { BellSchedule } from "./api";
 import css from "styled-jsx/css";
+import datefns from "date-fns";
+import cn from "classnames";
+import { tupleDate, isLateWed } from "./utils";
 
 interface BellsProps {
   bellSchedule: BellSchedule | undefined;
@@ -16,18 +19,37 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
       ...bells
     }));
 
-  const { className: numClass, styles } = css.resolve`
-    * {
-      width: 20%; 
+  const { className, styles } = css.resolve`
+    .period {
+      width: 20%;
+    }
+    .today {
+      font-weight: bold;
     }
   `;
+
+  const late =
+    bellSchedule &&
+    isLateWed(bellSchedule, datefns.startOfToday());
 
   return (
     <>
       <DataTable value={periods} header="Bell Schedule" className="text-center">
-        <Column field="num" header="Period #" className={numClass} />
-        <Column field="normal" header="Normal Times" />
-        <Column field="lateArrival" header="Late Arrival Times" />
+        <Column
+          field="num"
+          header="Period"
+          className={cn(className, "period")}
+        />
+        <Column
+          field="normal"
+          header="Normal Times"
+          bodyClassName={cn(className, bellSchedule && !late && "today")}
+        />
+        <Column
+          field="lateArrival"
+          header="Late Arrival Times"
+          className={cn(className, bellSchedule && late && "today")}
+        />
       </DataTable>
       {styles}
     </>

@@ -2,19 +2,23 @@ import React, { FunctionComponent } from "react";
 import { BellSchedule } from "./api";
 import { Panel } from "primereact/panel";
 import { ProgressBar } from "primereact/progressbar";
+import datefns from "date-fns"
+import { isLateWed, nextWed } from "./utils";
 
 interface LateArrivalInfoProps {
   bellSchedule: BellSchedule | undefined;
 }
 
 const LateArrivalInfo: FunctionComponent<LateArrivalInfoProps> = ({ bellSchedule }) => {
+  const next = nextWed();
+  const late = bellSchedule && isLateWed(bellSchedule, next);
   return (
     <>
       <Panel header="Late Arrival">
         {bellSchedule ? (
           <>
-            This upcoming Wednesday, {bellSchedule.nextWed},{" "}
-            {bellSchedule.nextWedLate ? (
+            This upcoming Wednesday, {datefns.format(next, "MMMM Do")},{" "}
+            {late ? (
               <span className="yes">WILL</span>
             ) : (
                 <span className="no">will NOT</span>

@@ -58,7 +58,7 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
       .trim()
       .match(/^(\d+)/)![1]
   );
-  const weds: Array<Date | null> = [];
+  const weds: BellSchedule["weds"] = [];
   wedsDiv.find("tbody p").each((_i, p) => {
     const text = p.children[0].data!;
     const m = text.match(/(\w+)\s+(\d+)(?:\s+.+?\s+(\d+))?/);
@@ -73,26 +73,16 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
         year + 1;
     const addWed = (i: number) => {
       const day = Number(m[i]);
-      const date = new Date(realYear, month, day);
       weds.push(
-        // in case the date's wrong for whatever reason
-        datefns.isWednesday(date) ? date : null
+        [realYear, month, day]
       );
     };
     addWed(2);
     if (m[3] != null) addWed(3);
   });
-  const today = datefns.startOfToday();
-  let nextWed = datefns.setDay(today, 3);
-  if (datefns.isAfter(today, nextWed)) {
-    nextWed = datefns.addWeeks(nextWed, 1);
-  }
-  const nextWedLate = weds.some(wed => !!wed && datefns.isEqual(nextWed, wed));
   return {
     periods,
-    weds,
-    nextWed: datefns.format(nextWed, "MMMM Do"),
-    nextWedLate
+    weds
   };
 };
 

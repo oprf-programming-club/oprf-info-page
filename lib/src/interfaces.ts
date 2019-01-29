@@ -9,10 +9,9 @@ export interface Period {
 export interface BellSchedule {
   /** Information about periods in a day */
   periods: Period[];
-  /** Information about late arrival Wednesdays */
-  weds: Array<Date | null>;
-  /** The date of this upcoming Wednesday, formatted as a string */
-  nextWed: string;
-  /** Whether this upcoming Wednesday is a late arrival Wednesday */
-  nextWedLate: boolean;
+  /**
+   * Information about late arrival Wednesdays. Tuples of year, month, day;
+   * because server -> client dates are annoying
+   */
+  weds: Array<[number, number, number] | null>;
 }
