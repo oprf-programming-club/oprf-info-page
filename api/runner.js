@@ -1,4 +1,8 @@
 const { default: index } = require("./dist/index.js");
 const http = require("http");
 
-http.createServer(index).listen(Number(process.env.PORT) || 3000);
+const port = Number(process.env.PORT) || 3000;
+
+http.createServer(index).listen(port);
+
+console.log(`Listening on port ${port}`);
