@@ -1,0 +1,21 @@
+@media (min-width: 900px) {
+  body {
+    margin: 0 100px;
+  }
+}
+@media (min-width: 500px) and (max-width: 900px) {
+  body {
+    margin: 0 50px;
+  }
+}
+
+html,
+body,
+#app,
+.full-dim {
+  height: 90%;
+}
+
+.text-center {
+  text-align: center;
+}
