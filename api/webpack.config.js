@@ -1,5 +1,6 @@
 const { envPlugin, mode } = require("../common-webpack.config");
 
+const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
 
@@ -12,7 +13,7 @@ module.exports = {
     libraryTarget: "commonjs2"
   },
   mode,
-  plugins: [envPlugin],
+  plugins: [envPlugin, new webpack.ContextReplacementPlugin(/.*$/, /a^/)],
   optimization: {
     minimizer: [new TerserPlugin()]
   },
