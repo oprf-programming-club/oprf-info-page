@@ -12,5 +12,6 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "now": "latest"
-  }
+  },
+  "version": "0.1.0-urmom"
 }
