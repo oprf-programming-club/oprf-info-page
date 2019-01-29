@@ -22,6 +22,8 @@ const endJSON = (res: ServerResponse, obj: any) => {
   res.end();
 };
 
+export const DEFAULT_PORT = process.env.OPRF_API_DEFAULT_PORT!;
+
 const validPaths = tuple("bellSchedule", "lunchMenu");
 
 const _pathBase = new URL(process.env.OPRF_API_URL!, "http://example.com")

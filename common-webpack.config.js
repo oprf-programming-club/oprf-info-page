@@ -7,6 +7,9 @@ const webpack = require("webpack");
 exports.isDev = isDev;
 exports.mode = mode;
 
+const OPRF_API_DEFAULT_PORT = 60302;
+
 exports.envPlugin = new webpack.EnvironmentPlugin({
-  OPRF_API_URL: isDev ? "http://localhost:3000" : "/api"
+  OPRF_API_DEFAULT_PORT,
+  OPRF_API_URL: isDev ? `http://localhost:${OPRF_API_DEFAULT_PORT}` : "/api"
 });
