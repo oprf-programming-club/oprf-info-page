@@ -1,18 +1,18 @@
 {
-    "name": "oprf",
-    "version": "0.1.0",
-    "dependencies": {
-        "cheerio": "^1.0.0-rc.2",
-        "date-fns": "^1.30.1",
-        "got": "^9.6.0",
-        "html-entities": "^1.2.1"
-    },
-    "devDependencies": {
-        "@types/cheerio": "^0.22.10",
-        "@types/got": "^9.4.0",
-        "@types/html-entities": "^1.2.16",
-        "@types/htmlparser2": "^3.7.31",
-        "typescript": "^3.2.4"
-    },
-    "private": true
+  "name": "oprf",
+  "version": "0.1.0",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "date-fns": "^1.30.1",
+    "got": "^9.6.0",
+    "html-entities": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.10",
+    "@types/got": "^9.4.0",
+    "@types/html-entities": "^1.2.16",
+    "@types/htmlparser2": "^3.7.31",
+    "typescript": "^3.2.4"
+  },
+  "private": true
 }

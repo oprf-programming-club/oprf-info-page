@@ -68,14 +68,12 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
       // if month is after July
       datefns.isAfter(new Date(year, month), new Date(year, 6))
         ? // then first year of school year, e.g. 2018
-        year
+          year
         : // else second year of school year, e.g. 2019
-        year + 1;
+          year + 1;
     const addWed = (i: number) => {
       const day = Number(m[i]);
-      weds.push(
-        [realYear, month, day]
-      );
+      weds.push([realYear, month, day]);
     };
     addWed(2);
     if (m[3] != null) addWed(3);
@@ -91,16 +89,25 @@ export const lunchMenu = async (): Promise<string[]> => {
   const tbody = $("table > tbody");
   const trs = tbody.children();
   const htmlEntities = new AllHtmlEntities();
-  const menuItems = trs.eq(1).children().toArray().map(td => {
-    // The whole thing is a mess. Sometimes the text is in a `p`, sometimes a `span`,
-    // and sometimes a `span` within a `p`.
-    const text = $(td).find("p, span").toArray()
-      // only lets through elements whose child is a text node
-      .filter(p => p.children[0] && p.children[0].data)
-      .map(p => $(p).text())
-      .filter(s => s)
-      .join("\n")
-    return htmlEntities.decode(text).replace(/[ \u00A0]+/g, " ").replace(/ \n/g, "\n");
-  })
+  const menuItems = trs
+    .eq(1)
+    .children()
+    .toArray()
+    .map(td => {
+      // The whole thing is a mess. Sometimes the text is in a `p`, sometimes a `span`,
+      // and sometimes a `span` within a `p`.
+      const text = $(td)
+        .find("p, span")
+        .toArray()
+        // only lets through elements whose child is a text node
+        .filter(p => p.children[0] && p.children[0].data)
+        .map(p => $(p).text())
+        .filter(s => s)
+        .join("\n");
+      return htmlEntities
+        .decode(text)
+        .replace(/[ \u00A0]+/g, " ")
+        .replace(/ \n/g, "\n");
+    });
   return menuItems;
 };

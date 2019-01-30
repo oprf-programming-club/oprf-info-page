@@ -1,9 +1,4 @@
 {
-    "presets": [
-        "@babel/preset-react"
-    ],
-    "plugins": [
-        "styled-jsx/babel",
-        "@babel/plugin-syntax-dynamic-import"
-    ]
+  "presets": ["@babel/preset-react"],
+  "plugins": ["styled-jsx/babel", "@babel/plugin-syntax-dynamic-import"]
 }
