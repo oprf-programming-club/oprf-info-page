@@ -3,7 +3,7 @@ import got from "got";
 import cheerio from "cheerio";
 import datefns from "date-fns";
 import { AllHtmlEntities } from "html-entities";
-import { BellSchedule, Period } from "./interfaces";
+import { BellSchedule, Period, LunchMenu } from "./interfaces";
 
 export * from "./interfaces";
 export * from "./client-utils";
@@ -87,7 +87,7 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
   };
 };
 
-export const lunchMenu = async (): Promise<string[]> => {
+export const lunchMenu = async (): Promise<LunchMenu> => {
   const $ = await fetchWebsite(OPRF_URLS.LUNCH_MENU);
   const tbody = $("table > tbody");
   const trs = tbody.children();

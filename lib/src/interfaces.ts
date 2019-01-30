@@ -15,3 +15,5 @@ export interface BellSchedule {
    */
   weds: Array<[number, number, number] | null>;
 }
+
+export type LunchMenu = string[];
