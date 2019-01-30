@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 import { LunchMenu } from "./api";
 
 interface LunchInfoProps {
-  lunchMenu: LunchMenu[] | undefined;
+  lunchMenu: LunchMenu | undefined;
 }
 
 const template = (rowData, column) => {

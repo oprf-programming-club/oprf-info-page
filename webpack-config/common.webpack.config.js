@@ -6,6 +6,7 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
+const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
 module.exports = exports = otherConfig =>
   merge.smart(config, otherConfig, {
@@ -30,7 +31,8 @@ const config = {
         ? `http://localhost:${OPRF_API_DEFAULT_PORT}`
         : "/api",
       OPRF_API_CORS: isDev
-    })
+    }),
+    new HardSourceWebpackPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, ".."), "node_modules"],

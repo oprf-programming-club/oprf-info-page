@@ -4,6 +4,7 @@
   "private": true,
   "main": "./common.webpack.config.js",
   "devDependencies": {
+    "hard-source-webpack-plugin": "^0.13.1",
     "terser-webpack-plugin": "^1.2.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.4",
