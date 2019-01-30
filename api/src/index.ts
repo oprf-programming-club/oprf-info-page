@@ -1,8 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
-import { URL } from "url";
+import { parse as parseUrl } from "url";
 import * as oprf from "../../lib/src";
-
-const tuple = <T extends string[]>(...a: T) => a;
 
 const endStatus = (
   res: ServerResponse,
@@ -28,12 +26,12 @@ interface PathInfo {
   cacheAge?: number;
 }
 
+type PathFunc = (opts: { [k: string]: string | string[] }) => Promise<any>;
+
 // It works, don't ask
-type _OPRFKey<
-  T extends keyof typeof oprf
-> = typeof oprf[T] extends (() => Promise<any>) ? T : never;
-type _PathMap = { [path in keyof typeof oprf]: _OPRFKey<path> };
-type ValidPaths = _PathMap[keyof typeof oprf];
+type ValidPaths = {
+  [path in keyof typeof oprf]: typeof oprf[path] extends PathFunc ? path : never
+}[keyof typeof oprf];
 
 const validPaths: { [path in ValidPaths]: PathInfo } = {
   bellSchedule: {
@@ -44,8 +42,7 @@ const validPaths: { [path in ValidPaths]: PathInfo } = {
   }
 };
 
-const _pathBase = new URL(process.env.OPRF_API_URL!, "http://example.com")
-  .pathname;
+const _pathBase = parseUrl(process.env.OPRF_API_URL!).pathname || "/";
 const pathBase = _pathBase.endsWith("/") ? _pathBase : _pathBase + "/";
 
 const index = async (req: IncomingMessage, res: ServerResponse) => {
@@ -65,8 +62,9 @@ const index = async (req: IncomingMessage, res: ServerResponse) => {
   const pathname = req.url.slice(pathBase.length - 1);
   for (const [path, pathInfo] of Object.entries(validPaths)) {
     if (pathname == `/${path}`) {
-      const apiFunc = oprf[path];
-      const data = await apiFunc();
+      const apiFunc: PathFunc = oprf[path];
+      const { query } = parseUrl(req.url, true);
+      const data = await apiFunc(query);
       if (process.env.NODE_ENV === "production" && pathInfo.cacheAge) {
         res.setHeader("Cache-Control", `s-maxage=${pathInfo.cacheAge}`);
       }
