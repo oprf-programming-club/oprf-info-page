@@ -1,6 +1,6 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { parse as parseUrl } from "url";
-import * as oprf from "../../lib/src";
+import * as oprf from "lib/";
 
 const endStatus = (
   res: ServerResponse,

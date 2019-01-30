@@ -1,6 +1,10 @@
 {
   "name": "oprf",
   "version": "0.1.0",
+  "main": "./src/index",
+  "scripts": {
+    "test": "ava"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "date-fns": "^1.30.1",
@@ -12,7 +16,18 @@
     "@types/got": "^9.4.0",
     "@types/html-entities": "^1.2.16",
     "@types/htmlparser2": "^3.7.31",
+    "ava": "^1.2.0",
+    "ts-node": "^8.0.2",
     "typescript": "^3.2.4"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   },
   "private": true
 }

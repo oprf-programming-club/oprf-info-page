@@ -5,6 +5,8 @@ import datefns from "date-fns";
 import { AllHtmlEntities } from "html-entities";
 import { BellSchedule, Period } from "./interfaces";
 
+export * from "./client-utils";
+
 const cheerioResponse = (stream: NodeJS.ReadableStream) =>
   new Promise<CheerioStatic>((res, rej) => {
     // @ts-ignore

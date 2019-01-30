@@ -5,7 +5,7 @@ import { BellSchedule } from "./api";
 import css from "styled-jsx/css";
 import datefns from "date-fns";
 import cn from "classnames";
-import { tupleDate, isLateWed } from "./utils";
+import { isLateWed } from "lib/utils";
 
 interface BellsProps {
   bellSchedule: BellSchedule | undefined;
@@ -28,9 +28,7 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
     }
   `;
 
-  const late =
-    bellSchedule &&
-    isLateWed(bellSchedule, datefns.startOfToday());
+  const late = bellSchedule && isLateWed(bellSchedule, datefns.startOfToday());
 
   return (
     <>

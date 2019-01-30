@@ -3,7 +3,8 @@
   "workspaces": [
     "app",
     "lib",
-    "api"
+    "api",
+    "webpack-config"
   ],
   "scripts": {
     "start": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold' 'cd api;yarn start' 'cd app;yarn start'",
