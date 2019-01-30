@@ -26,14 +26,7 @@ interface PathInfo {
   cacheAge?: number;
 }
 
-type PathFunc = (opts: { [k: string]: string | string[] }) => Promise<any>;
-
-// It works, don't ask
-type ValidPaths = {
-  [path in keyof typeof oprf]: typeof oprf[path] extends PathFunc ? path : never
-}[keyof typeof oprf];
-
-const validPaths: { [path in ValidPaths]: PathInfo } = {
+const validPaths: { [path in oprf.ValidPaths]: PathInfo } = {
   bellSchedule: {
     cacheAge: 84600
   },
@@ -62,7 +55,7 @@ const index = async (req: IncomingMessage, res: ServerResponse) => {
   const pathname = req.url.slice(pathBase.length - 1);
   for (const [path, pathInfo] of Object.entries(validPaths)) {
     if (pathname == `/${path}`) {
-      const apiFunc: PathFunc = oprf[path];
+      const apiFunc: oprf.PathFunc = oprf[path];
       const { query } = parseUrl(req.url, true);
       const data = await apiFunc(query);
       if (process.env.NODE_ENV === "production" && pathInfo.cacheAge) {

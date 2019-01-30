@@ -1,11 +1,11 @@
-export * from "lib/src/interfaces";
+export * from "lib/utils";
 
-import { BellSchedule } from "lib/src/interfaces";
+import { ValidPaths, BellSchedule } from "lib/utils";
 
-const fetchPath = (path: string) =>
-  fetch(process.env.OPRF_API_URL + path).then(r => r.json());
+const fetchPath = (path: ValidPaths) =>
+  fetch(process.env.OPRF_API_URL + "/" + path).then(r => r.json());
 
 export const bellSchedule = (): Promise<BellSchedule> =>
-  fetchPath("/bellSchedule");
+  fetchPath("bellSchedule");
 
-export const lunchMenu = (): Promise<string[]> => fetchPath("/lunchMenu");
+export const lunchMenu = (): Promise<string[]> => fetchPath("lunchMenu");
