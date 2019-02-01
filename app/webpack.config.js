@@ -27,16 +27,19 @@ const config = {
       {
         test: /\.css$/,
         use: [
-          ({ issuer }) => {
-            if (
-              !isDev &&
-              issuer === path.join(__dirname, "src/styles/preloaded.ts")
-            ) {
-              return MiniCssExtractPlugin.loader;
-            } else {
-              return "style-loader";
-            }
-          },
+          (() => {
+            const preloaded = new Set([
+              path.join(__dirname, "src/styles/preloaded.ts")
+            ]);
+            return ({ issuer, realResource }) => {
+              if (!isDev && preloaded.has(issuer)) {
+                preloaded.add(realResource);
+                return MiniCssExtractPlugin.loader;
+              } else {
+                return "style-loader";
+              }
+            };
+          })(),
           "css-loader"
         ]
       },
