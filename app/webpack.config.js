@@ -1,7 +1,10 @@
 const common = require("../webpack-config");
+const { isDev } = common;
 
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
 
 const config = {
   context: __dirname,
@@ -13,7 +16,8 @@ const config = {
       title: "OPRF Info",
       appMountId: "app",
       favicon: "assets/favicon.ico"
-    })
+    }),
+    new MiniCssExtractPlugin()
   ],
   optimization: {
     minimizer: [new OptimizeCSSAssetsPlugin()]
@@ -22,7 +26,19 @@ const config = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          ({ issuer }) => {
+            if (
+              !isDev &&
+              issuer === path.join(__dirname, "src/styles/preloaded.ts")
+            ) {
+              return MiniCssExtractPlugin.loader;
+            } else {
+              return "style-loader";
+            }
+          },
+          "css-loader"
+        ]
       },
       {
         test: /\.tsx?$/,
