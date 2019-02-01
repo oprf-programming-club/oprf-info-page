@@ -58,8 +58,9 @@ const index = async (req: IncomingMessage, res: ServerResponse) => {
       const apiFunc: oprf.PathFunc = oprf[path];
       const { query } = parseUrl(req.url, true);
       const data = await apiFunc(query);
-      if (process.env.NODE_ENV === "production" && pathInfo.cacheAge) {
-        res.setHeader("Cache-Control", `s-maxage=${pathInfo.cacheAge}`);
+      const { cacheAge } = pathInfo;
+      if (process.env.NODE_ENV === "production" && cacheAge) {
+        res.setHeader("Cache-Control", `maxage=${cacheAge},s-maxage=${cacheAge}`);
       }
       return endJSON(res, data);
     }
