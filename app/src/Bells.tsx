@@ -29,6 +29,7 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
   `;
 
   const late = bellSchedule && isLateWed(bellSchedule, datefns.startOfToday());
+  const weekday = !datefns.isWeekend(datefns.startOfToday());
 
   return (
     <>
@@ -41,12 +42,12 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
         <Column
           field="normal"
           header="Normal Times"
-          bodyClassName={cn(className, bellSchedule && !late && "today")}
+          bodyClassName={cn(className, bellSchedule && weekday && !late && "today")}
         />
         <Column
           field="lateArrival"
           header="Late Arrival Times"
-          className={cn(className, bellSchedule && late && "today")}
+          className={cn(className, bellSchedule && weekday && late && "today")}
         />
       </DataTable>
       {styles}
