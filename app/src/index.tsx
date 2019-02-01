@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { ProgressSpinner } from "primereact/progressspinner";
 import ReactDOM from "react-dom";
 import stylesProm from "./styles";
+import { apiPath } from "./api";
 
 const App = React.lazy(async () => {
   // Start the `App` import
@@ -26,3 +27,10 @@ ReactDOM.render(
   </Suspense>,
   document.getElementById("app")
 );
+
+// "Analytics"
+if (process.env.NODE_ENV === "production") {
+  const url = new URL(apiPath("analytics"), location.href);
+  url.searchParams.set("date", new Date().toDateString());
+  fetch(url.href).catch(console.error);
+}

@@ -2,6 +2,11 @@
   "name": "oprf-info-page",
   "version": 2,
   "alias": "https://oprf-info-page.now.sh",
+  "build": {
+    "env": {
+      "OPRF_API_ANALYTICS_URL": "@oprf-api-analytics-url"
+    }
+  },
   "builds": [
     {
       "src": "api/now-runner.js",

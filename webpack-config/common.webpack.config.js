@@ -30,7 +30,8 @@ const config = {
       OPRF_API_URL: isDev
         ? `http://localhost:${OPRF_API_DEFAULT_PORT}`
         : "/api",
-      OPRF_API_CORS: isDev
+      OPRF_API_CORS: isDev,
+      OPRF_API_ANALYTICS_URL: null
     }),
     new HardSourceWebpackPlugin()
   ],

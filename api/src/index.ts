@@ -1,37 +1,29 @@
 import { ServerResponse, IncomingMessage } from "http";
 import { parse as parseUrl } from "url";
 import * as oprf from "lib/";
-
-const endStatus = (
-  res: ServerResponse,
-  statusCode: number,
-  statusMessage?: string,
-  message = statusMessage
-) => {
-  res.statusCode = statusCode;
-  if (statusMessage) res.statusMessage = statusMessage;
-  res.end(message);
-};
-
-const endJSON = (res: ServerResponse, obj: any) => {
-  res.setHeader("Content-Type", "application/json");
-  res.write(JSON.stringify(obj));
-  res.write("\n");
-  res.end();
-};
+import analytics from "./analytics";
+import { endStatus, endJSON } from "./utils";
 
 export const DEFAULT_PORT = process.env.OPRF_API_DEFAULT_PORT!;
 
 interface PathInfo {
+  func:
+    | oprf.PathFunc
+    | { handler: (req: IncomingMessage, res: ServerResponse) => void };
   cacheAge?: number;
 }
 
-const validPaths: { [path in oprf.ValidPaths]: PathInfo } = {
+const validPaths: { [path: string]: PathInfo } = {
   bellSchedule: {
+    func: oprf.bellSchedule,
     cacheAge: 84600
   },
   lunchMenu: {
+    func: oprf.lunchMenu,
     cacheAge: 169200
+  },
+  analytics: {
+    func: { handler: analytics }
   }
 };
 
@@ -52,17 +44,24 @@ const index = async (req: IncomingMessage, res: ServerResponse) => {
       "Provided OPRF_API_URL doesn't match with path obtained from HTTP request"
     );
   }
-  const pathname = req.url.slice(pathBase.length - 1);
+  const url = parseUrl(req.url, true);
+  const pathname = url.pathname!.slice(pathBase.length - 1);
   for (const [path, pathInfo] of Object.entries(validPaths)) {
     if (pathname == `/${path}`) {
-      const apiFunc: oprf.PathFunc = oprf[path];
-      const { query } = parseUrl(req.url, true);
-      const data = await apiFunc(query);
-      const { cacheAge } = pathInfo;
-      if (process.env.NODE_ENV === "production" && cacheAge) {
-        res.setHeader("Cache-Control", `maxage=${cacheAge},s-maxage=${cacheAge}`);
+      const { func } = pathInfo;
+      if ("handler" in func) {
+        return func.handler(req, res);
+      } else {
+        const data = await func(url.query);
+        const { cacheAge } = pathInfo;
+        if (process.env.NODE_ENV === "production" && cacheAge) {
+          res.setHeader(
+            "Cache-Control",
+            `maxage=${cacheAge},s-maxage=${cacheAge}`
+          );
+        }
+        return endJSON(res, data);
       }
-      return endJSON(res, data);
     }
   }
   endStatus(res, 404, "Invalid request path");
