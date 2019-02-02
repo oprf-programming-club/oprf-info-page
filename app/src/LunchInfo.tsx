@@ -2,6 +2,9 @@ import React, { FunctionComponent, Fragment } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { LunchMenu } from "./api";
+import datefns from "date-fns";
+import css from "styled-jsx/css";
+import cn from "classnames";
 
 interface LunchInfoProps {
   lunchMenu: LunchMenu | undefined;
@@ -19,14 +22,33 @@ const template = (rowData, column) => {
   );
 };
 
-const LunchInfo: FunctionComponent<LunchInfoProps> = ({ lunchMenu }) => (
-  <DataTable header="Lunch Menu" value={[lunchMenu]}>
-    <Column field="0" body={template} header="Monday" />
-    <Column field="1" body={template} header="Tuesday" />
-    <Column field="2" body={template} header="Wednesday" />
-    <Column field="3" body={template} header="Thursday" />
-    <Column field="4" body={template} header="Friday" />
-  </DataTable>
-);
+const LunchInfo: FunctionComponent<LunchInfoProps> = ({ lunchMenu }) => {
+  const day = datefns.getDay(new Date());
+
+  const { className, styles } = css.resolve`
+    .today {
+      font-weight: bold;
+    }
+  `;
+
+  return (
+    <>
+      <DataTable header="Lunch Menu" value={[lunchMenu]}>
+        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map(
+          (name, i) => (
+            <Column
+              field={String(i)}
+              body={template}
+              header={name}
+              key={name}
+              bodyClassName={cn(className, day === i + 1 && "today")}
+            />
+          )
+        )}
+      </DataTable>
+      {styles}
+    </>
+  );
+};
 
 export default LunchInfo;
