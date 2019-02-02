@@ -6,7 +6,7 @@ export const usePromise = <T>(prom: () => Promise<T>): undefined | T => {
   useEffect(() => {
     prom().then(result => {
       setState(result);
-    });
+    }, console.error);
   }, []);
 
   return state;

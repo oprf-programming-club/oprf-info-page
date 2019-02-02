@@ -10,17 +10,14 @@ interface LunchInfoProps {
   lunchMenu: LunchMenu | undefined;
 }
 
-const template = (rowData, column) => {
-  return (
-    rowData &&
-    rowData[column.field].split("\n").map((item, key) => (
-      <Fragment key={key}>
-        {item}
-        <br />
-      </Fragment>
-    ))
-  );
-};
+const template = (rowData: LunchMenu | undefined, column: any) =>
+  rowData &&
+  rowData[column.field].split("\n").map((item, key) => (
+    <Fragment key={key}>
+      {item}
+      <br />
+    </Fragment>
+  ));
 
 const LunchInfo: FunctionComponent<LunchInfoProps> = ({ lunchMenu }) => {
   const day = datefns.getDay(new Date());
