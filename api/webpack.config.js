@@ -1,5 +1,7 @@
 const common = require("webpack-config");
+const { isDev } = common;
 
+const NodemonPlugin = require("nodemon-webpack-plugin");
 const webpack = require("webpack");
 
 const config = {
@@ -11,5 +13,12 @@ const config = {
   },
   plugins: [new webpack.ContextReplacementPlugin(/.*$/, /a^/)]
 };
+if (isDev) {
+  config.plugins.push(
+    new NodemonPlugin({
+      script: "./runner.js"
+    })
+  );
+}
 
 module.exports = common(config);

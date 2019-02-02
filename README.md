@@ -6,8 +6,7 @@ know.
 ## Developing
 
 Ensure that you have [NodeJS](https://nodejs.org) and
-[Yarn](https://yarnpkg.com) installed (also that you're on linux but that may
-change).
+[Yarn](https://yarnpkg.com) installed.
 
 Run in command line:
 
@@ -16,17 +15,11 @@ git clone https://github.com/oprf-programming-club/oprf-info-page
 cd oprf-info-page
 yarn
 
-# don't actually run this ↓
-while [[ $developing ]]; do
-
-  yarn start
-  # or, if you're on https://coder.com
-  yarn start:coder
-
-  # Navigate to http://localhost:5000 or
-  # whatever "80" URL is in the sidebar in coder
-
-done
+yarn dev
+# Or, to just run once
+yarn start
+# Or, to run once in production mode
+yarn env:prod start
 ```
 
 ## License

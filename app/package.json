@@ -4,6 +4,7 @@
   "author": "coolreader18",
   "scripts": {
     "start": "yarn build && PORT=$OPRF_APP_PORT serve dist",
+    "dev": "webpack-dev-server",
     "build": "webpack",
     "dist": "NODE_ENV=production webpack",
     "now-build": "yarn dist"
@@ -42,7 +43,8 @@
     "tslint": "^5.12.1",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   },
   "license": "MIT"
 }

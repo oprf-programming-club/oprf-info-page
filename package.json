@@ -7,14 +7,19 @@
     "webpack-config"
   ],
   "scripts": {
-    "start": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold' 'cd api;yarn start' 'cd app;yarn start'",
+    "start": "yarn _conc 'cd api;yarn start' 'cd app;yarn start'",
     "deploy": "now",
-    "start:coder": "OPRF_APP_PORT=80 OPRF_API_PORT=3000 OPRF_API_URL=https://3000-gluesweepinggnu.cdr.co yarn start",
-    "start:prod": "OPRF_API_CORS=true NODE_ENV=production yarn start"
+    "dev": "yarn _conc 'cd api;yarn dev' 'cd app;yarn dev'",
+    "_conc": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold'",
+    "cmd": " ",
+    "env": "cross-env",
+    "env:coder": "yarn env OPRF_APP_PORT=80 OPRF_API_PORT=3000 yarn",
+    "env:prod": "yarn env NODE_ENV=production OPRF_API_CORS=true yarn"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "now": "latest"
+    "now": "latest",
+    "cross-env": "^5.2.0"
   },
   "version": "0.1.0-urmom"
 }

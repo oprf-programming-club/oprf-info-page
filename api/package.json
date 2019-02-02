@@ -5,12 +5,14 @@
     "start": "yarn build && node runner",
     "build": "webpack",
     "dist": "NODE_ENV=production yarn build",
-    "now-build": "yarn dist"
+    "now-build": "yarn dist",
+    "dev": "yarn build --watch"
   },
   "dependencies": {
     "polka": "^0.5.1"
   },
   "devDependencies": {
+    "nodemon-webpack-plugin": "^4.0.7",
     "terser-webpack-plugin": "^1.2.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.4",
