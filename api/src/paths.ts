@@ -27,7 +27,8 @@ const _paths = {
   }
 };
 
-export const paths = (<P extends string>(paths: { [p in P]: PathInfo }) =>
-  paths)(_paths);
+export const paths = (<P extends string>(paths: { [p in P]: PathInfo }) => {
+  return paths;
+})(_paths);
 
 export type Paths = keyof typeof paths;
