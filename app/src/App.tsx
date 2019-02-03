@@ -6,6 +6,7 @@ import LateArrivalInfo from "./LateArrivalInfo";
 import { useMedia } from "use-media";
 import LunchInfo from "./LunchInfo";
 import { usePromise } from "./utils";
+import datefns from "date-fns";
 
 const App = () => {
   const bells = usePromise(bellSchedule);
@@ -16,7 +17,7 @@ const App = () => {
   return (
     <div>
       <Header>OPRF Info Page</Header>
-      <Header size={4}>{new Date().toDateString()}</Header>
+      <Header size={4}>{datefns.format(new Date(), "dddd, MMMM Do")}</Header>
       <div className="p-grid">
         <div className={small ? "p-col-12" : "p-col-5"}>
           <Bells bellSchedule={bells} />
