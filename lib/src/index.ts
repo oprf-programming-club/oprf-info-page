@@ -3,7 +3,7 @@ import got from "got";
 import cheerio from "cheerio";
 import dateFns from "date-fns";
 import { AllHtmlEntities } from "html-entities";
-import { BellSchedule, Period, LunchMenu } from "./interfaces";
+import { BellSchedule, PeriodInfo, LunchMenu, Period } from "./interfaces";
 
 export * from "./interfaces";
 export * from "./client-utils";
@@ -39,17 +39,25 @@ const OPRF_URLS = {
  */
 export const bellSchedule = async (): Promise<BellSchedule> => {
   const $ = await fetchWebsite(OPRF_URLS.BELLS_SCHEDULE);
-  const periods: Period[] = [];
+  const periods: PeriodInfo[] = [];
   $(".content-e > div:first-child tbody tr").each((i, tr) => {
     const kids = $(tr).children();
-    const getText = (i: number) =>
-      kids
-        .eq(i)
+    const getPeriods = (child: number): Period => {
+      const text = kids
+        .eq(child)
         .text()
         .trim();
+      const match = text.match(/(\d+):(\d+)\s+-\s+(\d+):(\d+)/);
+      if (!match) throw new Error(`Couldn't parse bell time: ${text}`);
+      const numberMatches = match.map(Number);
+      return [
+        [numberMatches[1], numberMatches[2]],
+        [numberMatches[3], numberMatches[4]]
+      ];
+    };
     const period = {
-      normal: getText(1),
-      lateArrival: getText(2)
+      normal: getPeriods(1),
+      lateArrival: getPeriods(2)
     };
     periods.push(period);
   });

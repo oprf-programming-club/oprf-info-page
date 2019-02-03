@@ -5,7 +5,7 @@ import { BellSchedule } from "./api";
 import css from "styled-jsx/css";
 import dateFns from "date-fns";
 import cn from "classnames";
-import { isLateWed } from "lib/utils";
+import { isLateWed, formatPeriod } from "lib/utils";
 
 interface BellsProps {
   bellSchedule: BellSchedule | undefined;
@@ -14,9 +14,10 @@ interface BellsProps {
 const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
   const periods =
     bellSchedule &&
-    bellSchedule.periods.map((bells, i) => ({
+    bellSchedule.periods.map((period, i) => ({
       num: i + 1,
-      ...bells
+      normal: formatPeriod(period.normal),
+      lateArrival: formatPeriod(period.lateArrival)
     }));
 
   const { className, styles } = css.resolve`
