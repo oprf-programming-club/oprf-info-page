@@ -42,7 +42,10 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
         <Column
           field="normal"
           header="Normal Times"
-          bodyClassName={cn(className, bellSchedule && weekday && !late && "today")}
+          bodyClassName={cn(
+            className,
+            bellSchedule && weekday && !late && "today"
+          )}
         />
         <Column
           field="lateArrival"

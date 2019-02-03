@@ -2,9 +2,11 @@ import { IncomingMessage, ServerResponse } from "http";
 import * as oprf from "oprf";
 import analytics from "./analytics";
 
-export type PathFunc = (opts: {
-  [k: string]: string | string[];
-}) => Promise<any>;
+export type PathFunc = (
+  opts: {
+    [k: string]: string | string[];
+  }
+) => Promise<any>;
 
 export interface PathInfo {
   func:
