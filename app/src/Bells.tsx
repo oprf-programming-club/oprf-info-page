@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { BellSchedule } from "./api";
 import css from "styled-jsx/css";
-import datefns from "date-fns";
+import dateFns from "date-fns";
 import cn from "classnames";
 import { isLateWed } from "lib/utils";
 
@@ -28,8 +28,8 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
     }
   `;
 
-  const late = bellSchedule && isLateWed(bellSchedule, datefns.startOfToday());
-  const weekday = !datefns.isWeekend(datefns.startOfToday());
+  const late = bellSchedule && isLateWed(bellSchedule, dateFns.startOfToday());
+  const weekday = !dateFns.isWeekend(dateFns.startOfToday());
 
   return (
     <>

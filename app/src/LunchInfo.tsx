@@ -2,7 +2,7 @@ import React, { FunctionComponent, Fragment } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { LunchMenu } from "./api";
-import datefns from "date-fns";
+import dateFns from "date-fns";
 import css from "styled-jsx/css";
 import cn from "classnames";
 
@@ -20,7 +20,7 @@ const template = (rowData: LunchMenu | undefined, column: any) =>
   ));
 
 const LunchInfo: FunctionComponent<LunchInfoProps> = ({ lunchMenu }) => {
-  const day = datefns.getDay(new Date());
+  const day = dateFns.getDay(new Date());
 
   const { className, styles } = css.resolve`
     .today {

@@ -1,7 +1,7 @@
 import htmlparser2 from "htmlparser2";
 import got from "got";
 import cheerio from "cheerio";
-import datefns from "date-fns";
+import dateFns from "date-fns";
 import { AllHtmlEntities } from "html-entities";
 import { BellSchedule, Period, LunchMenu } from "./interfaces";
 
@@ -69,7 +69,7 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
     const month = new Date(`${m[1]} 1`).getMonth();
     const realYear =
       // if month is after July
-      datefns.isAfter(new Date(year, month), new Date(year, 6))
+      dateFns.isAfter(new Date(year, month), new Date(year, 6))
         ? // then first year of school year, e.g. 2018
           year
         : // else second year of school year, e.g. 2019
