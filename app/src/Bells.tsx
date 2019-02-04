@@ -3,34 +3,62 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { BellSchedule } from "./api";
 import css from "styled-jsx/css";
-import dateFns from "date-fns";
+import dateFns, { isWeekend, isWithinRange } from "date-fns";
 import cn from "classnames";
-import { isLateWed, formatPeriod } from "lib/utils";
+import {
+  formatPeriod,
+  PeriodInfo,
+  periodTypeForDate,
+  dateWithinPeriod
+} from "lib/utils";
 
 interface BellsProps {
   bellSchedule: BellSchedule | undefined;
 }
 
 const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
+  interface PeriodInfoNum extends PeriodInfo {
+    num: number;
+  }
+
   const periods =
     bellSchedule &&
-    bellSchedule.periods.map((period, i) => ({
-      num: i + 1,
-      normal: formatPeriod(period.normal),
-      lateArrival: formatPeriod(period.lateArrival)
-    }));
+    bellSchedule.periods.map(
+      (period, i): PeriodInfoNum => ({
+        num: i + 1,
+        ...period
+      })
+    );
 
   const { className, styles } = css.resolve`
     .period {
       width: 20%;
     }
-    .today {
+    .bold {
       font-weight: bold;
     }
   `;
 
-  const late = bellSchedule && isLateWed(bellSchedule, dateFns.startOfToday());
-  const weekday = !dateFns.isWeekend(dateFns.startOfToday());
+  const today = dateFns.startOfToday();
+
+  const weekday = !isWeekend(today);
+
+  const periodType = bellSchedule && periodTypeForDate(bellSchedule, today);
+
+  type RowData = PeriodInfoNum;
+
+  const periodTemplate = (rowData: RowData, _column: any) => (
+    <span
+      className={cn(
+        weekday && dateWithinPeriod(rowData[periodType!]) && "bold"
+      )}
+    >
+      {rowData.num}
+    </span>
+  );
+
+  const bellsTemplate = (rowData: RowData, column: any) =>
+    formatPeriod(rowData[column.field]);
 
   return (
     <>
@@ -39,19 +67,19 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
           field="num"
           header="Period"
           className={cn(className, "period")}
+          body={periodTemplate}
         />
         <Column
           field="normal"
           header="Normal Times"
-          bodyClassName={cn(
-            className,
-            bellSchedule && weekday && !late && "today"
-          )}
+          bodyClassName={cn(className, periodType === "normal" && "bold")}
+          body={bellsTemplate}
         />
         <Column
           field="lateArrival"
           header="Late Arrival Times"
-          className={cn(className, bellSchedule && weekday && late && "today")}
+          className={cn(className, periodType === "lateArrival" && "bold")}
+          body={bellsTemplate}
         />
       </DataTable>
       {styles}

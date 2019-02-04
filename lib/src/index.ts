@@ -34,6 +34,10 @@ const OPRF_URLS = {
     "https://intranet.oprfhs.org/Services/food_service/Pages/Student_Menu.aspx"
 };
 
+const hour = (hour: number) =>
+  // Because they don't specify AM or PM on the website
+  hour < 6 ? hour + 12 : hour;
+
 /**
  * Fetches and consolidates information from the "Bell Schedules" page on the OPRF website.
  */
@@ -51,8 +55,8 @@ export const bellSchedule = async (): Promise<BellSchedule> => {
       if (!match) throw new Error(`Couldn't parse bell time: ${text}`);
       const numberMatches = match.map(Number);
       return [
-        [numberMatches[1], numberMatches[2]],
-        [numberMatches[3], numberMatches[4]]
+        [hour(numberMatches[1]), numberMatches[2]],
+        [hour(numberMatches[3]), numberMatches[4]]
       ];
     };
     const period = {
