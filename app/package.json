@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "coolreader18",
   "scripts": {
-    "start": "yarn build && PORT=$OPRF_APP_PORT serve dist",
+    "start": "yarn build && cross-env PORT=$OPRF_APP_PORT serve dist",
     "dev": "webpack-dev-server",
     "build": "webpack",
     "dist": "NODE_ENV=production webpack",

@@ -50,6 +50,7 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
   const periodTemplate = (rowData: RowData, _column: any) => (
     <span
       className={cn(
+        className,
         weekday && dateWithinPeriod(rowData[periodType!]) && "bold"
       )}
     >

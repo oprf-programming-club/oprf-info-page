@@ -46,8 +46,8 @@ export const periodForDate = (
   return type && period[type];
 };
 
-export const bellTimeToDate = (bell: BellTime, date = startOfToday()) =>
+export const bellTimeToDate = (bell: BellTime, date: Date = startOfToday()) =>
   setMinutes(setHours(date, bell[0]), bell[1]);
 
-export const dateWithinPeriod = (period: Period, date = new Date()) =>
+export const dateWithinPeriod = (period: Period, date: Date = new Date()) =>
   isWithinRange(date, bellTimeToDate(period[0]), bellTimeToDate(period[1]));

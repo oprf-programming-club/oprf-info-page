@@ -12,9 +12,8 @@
     "dev": "yarn _conc 'cd api;yarn dev' 'cd app;yarn dev'",
     "_conc": "concurrently -p '[{name}]' -n API,APP -c 'bgBlue.bold,bgGreen.bold'",
     "cmd": " ",
-    "env": "cross-env",
-    "env:coder": "yarn env OPRF_APP_PORT=80 OPRF_API_PORT=3000 yarn",
-    "env:prod": "yarn env NODE_ENV=production OPRF_API_CORS=true yarn"
+    "env:coder": "yarn cross-env OPRF_APP_PORT=80 OPRF_API_PORT=3000 yarn",
+    "env:prod": "yarn cross-env NODE_ENV=production OPRF_API_CORS=true yarn"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
