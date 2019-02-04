@@ -11,3 +11,6 @@ export const usePromise = <T>(prom: () => Promise<T>): undefined | T => {
 
   return state;
 };
+
+export const arrRandom = <T>(arr: T[]): T =>
+  arr[Math.floor(Math.random() * arr.length)];
