@@ -5,9 +5,12 @@ import got from "got";
 
 async function analytics(req: IncomingMessage, res: ServerResponse) {
   const { query } = url.parse(req.url!, true);
-  const { date } = query;
+  const { date, period } = query;
   if (!date || Array.isArray(date)) {
     return endStatus(res, 400, "Malformed request", "Bad date field");
+  }
+  if (!period || Array.isArray(period)) {
+    return endStatus(res, 400, "Malformed request", "Bad period field");
   }
 
   let d: Date;
@@ -20,7 +23,8 @@ async function analytics(req: IncomingMessage, res: ServerResponse) {
   await got
     .post(process.env.OPRF_API_ANALYTICS_URL!, {
       query: {
-        date: d.toDateString()
+        date: d.toDateString(),
+        period
       }
     })
     .catch(err => {

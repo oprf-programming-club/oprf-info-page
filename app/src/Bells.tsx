@@ -9,7 +9,7 @@ import {
   formatPeriod,
   PeriodInfo,
   periodTypeForDate,
-  dateWithinPeriod
+  periodForTime
 } from "lib/utils";
 
 interface BellsProps {
@@ -41,19 +41,14 @@ const Bells: FunctionComponent<BellsProps> = ({ bellSchedule }) => {
 
   const today = dateFns.startOfToday();
 
-  const weekday = !isWeekend(today);
-
   const periodType = bellSchedule && periodTypeForDate(bellSchedule, today);
 
   type RowData = PeriodInfoNum;
+  
+  const currentPeriod = bellSchedule && periodForTime(bellSchedule);
 
   const periodTemplate = (rowData: RowData, _column: any) => (
-    <span
-      className={cn(
-        className,
-        weekday && dateWithinPeriod(rowData[periodType!]) && "bold"
-      )}
-    >
+    <span className={cn(className, currentPeriod === rowData.num && "bold")}>
       {rowData.num}
     </span>
   );

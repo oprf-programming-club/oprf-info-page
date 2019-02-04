@@ -27,10 +27,3 @@ ReactDOM.render(
   </Suspense>,
   document.getElementById("app")
 );
-
-// "Analytics"
-if (process.env.NODE_ENV === "production") {
-  const url = new URL(apiPath("analytics"), location.href);
-  url.searchParams.set("date", new Date().toDateString());
-  fetch(url.href).catch(console.error);
-}

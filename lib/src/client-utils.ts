@@ -4,7 +4,7 @@ import dateFns, {
   setMinutes,
   isWithinRange
 } from "date-fns";
-import { BellSchedule, BellTime, Period, PeriodInfo } from "./interfaces";
+import { BellSchedule, BellTime, Period } from "./interfaces";
 
 export * from "./interfaces";
 
@@ -37,17 +37,19 @@ export const periodTypeForDate = (
     ? "lateArrival"
     : "normal";
 
-export const periodForDate = (
-  bells: BellSchedule,
-  period: PeriodInfo,
-  date: Date = startOfToday()
-): Period | null => {
-  const type = periodTypeForDate(bells, date);
-  return type && period[type];
-};
-
 export const bellTimeToDate = (bell: BellTime, date: Date = startOfToday()) =>
   setMinutes(setHours(date, bell[0]), bell[1]);
 
 export const dateWithinPeriod = (period: Period, date: Date = new Date()) =>
   isWithinRange(date, bellTimeToDate(period[0]), bellTimeToDate(period[1]));
+
+export const periodForTime = (bells: BellSchedule, date: Date = new Date()) => {
+  const periodType = periodTypeForDate(bells, date);
+  if (!periodType) return null;
+  let i = 1;
+  for (const period of bells.periods) {
+    if (dateWithinPeriod(period[periodType])) return i;
+    i++;
+  }
+  return null;
+}

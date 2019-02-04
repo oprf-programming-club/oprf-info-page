@@ -11,3 +11,10 @@ export const bellSchedule = (): Promise<BellSchedule> =>
   fetchPath("bellSchedule");
 
 export const lunchMenu = (): Promise<LunchMenu> => fetchPath("lunchMenu");
+
+export const analytics = async (period: number | null) => {
+  const url = new URL(apiPath("analytics"), location.href);
+  url.searchParams.set("date", new Date().toDateString());
+  url.searchParams.set("period", String(period || 0));
+  await fetch(url.href).catch(console.error);
+} 
