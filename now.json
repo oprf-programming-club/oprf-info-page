@@ -1,7 +1,10 @@
 {
   "name": "oprf-info-page",
   "version": 2,
-  "alias": "https://oprf-info-page.now.sh",
+  "alias": [
+    "oprf-info-page.now.sh",
+    "oprfinfopage.now.sh"
+  ],
   "build": {
     "env": {
       "OPRF_API_ANALYTICS_URL": "@oprf-api-analytics-url"
