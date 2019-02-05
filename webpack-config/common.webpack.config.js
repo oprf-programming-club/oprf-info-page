@@ -8,7 +8,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
-require("dotenv").load({ path: path.resolve(__dirname, "..") });
+require("dotenv").load({ path: path.resolve(__dirname, "../.env") })
 
 module.exports = exports = otherConfig =>
   merge.smart(config, otherConfig, {
