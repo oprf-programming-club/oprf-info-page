@@ -8,6 +8,8 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
+require("dotenv").load({ path: path.resolve(__dirname, "..") });
+
 module.exports = exports = otherConfig =>
   merge.smart(config, otherConfig, {
     output: { path: path.join(otherConfig.context, "dist") }
