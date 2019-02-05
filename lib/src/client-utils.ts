@@ -22,7 +22,11 @@ export const isLateWed = (bells: BellSchedule, day: Date = startOfToday()) =>
   bells.weds.some(wed => !!wed && dateFns.isSameDay(day, tupleDate(wed)));
 
 export const formatBellTime = (bellTime: BellTime) =>
-  `${bellTime[0]}:${("0" + bellTime[1]).slice(-2)}`;
+  bellTimeToDate(bellTime).toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true
+  });
 
 export const formatPeriod = (period: Period) =>
   `${formatBellTime(period[0])} - ${formatBellTime(period[1])}`;
@@ -52,4 +56,4 @@ export const periodForTime = (bells: BellSchedule, date: Date = new Date()) => {
     i++;
   }
   return null;
-}
+};
