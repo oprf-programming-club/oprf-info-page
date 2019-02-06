@@ -15,8 +15,8 @@
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^1.0.0",
     "primereact": "^3.0.0",
-    "react": "16.7.0-alpha.2",
-    "react-dom": "16.7.0-alpha.2",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "react-transition-group": "^2.5.3",
     "styled-jsx": "^3.2.0",
     "use-media": "^0.1.1"
