@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "now": "latest",
-    "cross-env": "^5.2.0"
+    "cross-env": "^5.2.0",
+    "now": "latest"
   },
   "version": "0.1.0-urmom"
 }
