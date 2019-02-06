@@ -1,23 +1,18 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Header from "./Header";
-import { bellSchedule, lunchMenu, analytics } from "./api";
+import { bellSchedule, lunchMenu, analytics, periodForTime, BellSchedule, LunchMenu } from "./api";
 import Bells from "./Bells";
 import LateArrivalInfo from "./LateArrivalInfo";
 import { useMedia } from "use-media";
 import LunchInfo from "./LunchInfo";
-import { usePromise } from "./utils";
 import dateFns from "date-fns";
-import { periodForTime } from "lib/utils"
 
-const App = () => {
-  const bells = usePromise(() => bellSchedule().then(bells => {
-    if (process.env.NODE_ENV === "production") {
-      analytics(periodForTime(bells));
-    }
-    return bells;
-  }));
-  const lunch = usePromise(lunchMenu);
+interface AppProps {
+  bells?: BellSchedule, 
+  lunch?: LunchMenu
+}
 
+const App: FunctionComponent<AppProps> = ({ bells, lunch }) => {
   const small = useMedia("(max-width: 600px)");
 
   return (
