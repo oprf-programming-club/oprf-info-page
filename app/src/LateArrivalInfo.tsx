@@ -14,18 +14,20 @@ const LateArrivalInfo: FunctionComponent<LateArrivalInfoProps> = ({
 }) => {
   const next = nextWed();
   const late = bellSchedule && isLateWed(bellSchedule, next);
+  const todayLate = dateFns.isToday(next);
   return (
     <>
       <Panel header="Late Arrival">
         {bellSchedule ? (
           <>
-            This upcoming Wednesday, {dateFns.format(next, "MMMM Do")},{" "}
+            {todayLate ? "Today, " : "This upcoming Wednesday, "}
+            {dateFns.format(next, "MMMM Do, ")}
             {late ? (
-              <span className="yes">WILL</span>
+              <span className="yes">{todayLate ? "IS" : "WILL"} </span>
             ) : (
-              <span className="no">will NOT</span>
-            )}{" "}
-            be a late arrival Wednesday.
+              <span className="no">{todayLate ? "is NOT" : "will NOT"} </span>
+            )}
+            {!todayLate && "be "}a late arrival Wednesday.
           </>
         ) : (
           <ProgressBar mode="indeterminate" />

@@ -12,7 +12,7 @@ export const tupleDate = (date: [number, number, number]) => new Date(...date);
 
 export const nextWed = () => {
   let nextWed = dateFns.setDay(dateFns.startOfToday(), 3);
-  if (dateFns.isPast(nextWed)) {
+  if (dateFns.isPast(nextWed) && !dateFns.isToday(nextWed)) {
     nextWed = dateFns.addWeeks(nextWed, 1);
   }
   return nextWed;
