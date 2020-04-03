@@ -38,9 +38,14 @@ const Root: FunctionComponent = () => {
     </div>
   );
   return (
-    <Suspense fallback={fallbackElem}>
-      <App {...{ bells, lunch }} />
-    </Suspense>
+    /* <Suspense fallback={fallbackElem}> */
+    /*   <App {...{ bells, lunch }} /> */
+    /* </Suspense> */
+    <div className="p-grid p-align-center p-justify-center full-dim">
+      <div className="p-col text-center" style={{ fontSize: '30px' }}>
+        SCHOOL'S GONE FOREVER
+      </div>
+    </div>
   );
 };
 
